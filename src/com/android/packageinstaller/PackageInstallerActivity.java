@@ -529,8 +529,6 @@ public class PackageInstallerActivity extends Activity implements OnCancelListen
         mInstallConfirm.setVisibility(View.INVISIBLE);
         PackageUtil.initSnippetForNewApp(this, as, R.id.app_snippet);
 
-        mOriginatingUid = getOriginatingUid(intent);
-
         // Deal with install source.
         String callerPackage = getCallingPackage();
         if (callerPackage != null && intent.getBooleanExtra(
@@ -538,6 +536,7 @@ public class PackageInstallerActivity extends Activity implements OnCancelListen
             try {
                 mSourceInfo = mPm.getApplicationInfo(callerPackage, 0);
                 if (mSourceInfo != null) {
+                    mOriginatingUid = getOriginatingUid(intent);
                     if ((mSourceInfo.flags&ApplicationInfo.FLAG_SYSTEM) != 0) {
                         // System apps don't need to be approved.
                         initiateInstall();
